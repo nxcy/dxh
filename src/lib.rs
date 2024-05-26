@@ -46,6 +46,9 @@ pub mod x {
 }
 
 pub mod y {
+    pub use std::any::TypeId;
+    pub use std::assert_eq;
+    pub use std::mem::align_of;
     pub use windows::Win32::Graphics::Direct3D12::D3D12_PIPELINE_STATE_SUBOBJECT_TYPE;
 }
 
@@ -64,8 +67,8 @@ macro_rules! def {
         }
         #[test]
         fn $test() {
-            $crate::x::check_pair($val, std::any::TypeId::of::<$typ>());
-            assert_eq!(std::mem::align_of::<$name>(), 8);
+            $crate::x::check_pair($val, $crate::y::TypeId::of::<$typ>());
+            $crate::y::assert_eq!($crate::y::align_of::<$name>(), 8);
         }
     };
 }
