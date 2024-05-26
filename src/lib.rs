@@ -5,43 +5,43 @@ pub mod stream {
 
     #[cfg(test)]
     macro_rules! add_pair {
-        ($o:expr,$val:expr,$typ:ty,$size:expr) => {
-            $o.push(($val, std::any::TypeId::of::<$typ>(), $size));
+        ($o:expr,$val:expr,$typ:ty,$size:expr,$off:expr) => {
+            $o.push(($val, std::any::TypeId::of::<$typ>(), $size, $off));
         };
     }
 
     #[cfg(test)]
-    fn check_pair(ty: D3D12_PIPELINE_STATE_SUBOBJECT_TYPE, val: std::any::TypeId, size: usize) {
-        let mut vec: Vec<(D3D12_PIPELINE_STATE_SUBOBJECT_TYPE, std::any::TypeId, usize)> = Vec::new();
+    fn check_pair(ty: D3D12_PIPELINE_STATE_SUBOBJECT_TYPE, val: std::any::TypeId, size: usize, off: usize) {
+        let mut vec: Vec<(D3D12_PIPELINE_STATE_SUBOBJECT_TYPE, std::any::TypeId, usize, usize)> = Vec::new();
 
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_ROOT_SIGNATURE, ID3D12RootSignature, 16);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_VS, D3D12_SHADER_BYTECODE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_PS, D3D12_SHADER_BYTECODE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DS, D3D12_SHADER_BYTECODE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_HS, D3D12_SHADER_BYTECODE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_GS, D3D12_SHADER_BYTECODE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_CS, D3D12_SHADER_BYTECODE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_STREAM_OUTPUT, D3D12_STREAM_OUTPUT_DESC, 40);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_BLEND, D3D12_BLEND_DESC, 336);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SAMPLE_MASK, u32, 8);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RASTERIZER, D3D12_RASTERIZER_DESC, 48);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL, D3D12_DEPTH_STENCIL_DESC, 56);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_INPUT_LAYOUT, D3D12_INPUT_LAYOUT_DESC, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_IB_STRIP_CUT_VALUE, D3D12_INDEX_BUFFER_STRIP_CUT_VALUE, 8);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_PRIMITIVE_TOPOLOGY, D3D12_PRIMITIVE_TOPOLOGY_TYPE, 8);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RENDER_TARGET_FORMATS, D3D12_RT_FORMAT_ARRAY, 40);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL_FORMAT, DXGI_FORMAT, 8);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SAMPLE_DESC, DXGI_SAMPLE_DESC, 16);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_NODE_MASK, D3D12_NODE_MASK, 8);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_NODE_MASK, u32, 8);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_CACHED_PSO, D3D12_CACHED_PIPELINE_STATE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_FLAGS, D3D12_PIPELINE_STATE_FLAGS, 8);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL1, D3D12_DEPTH_STENCIL_DESC1, 64);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_VIEW_INSTANCING, D3D12_VIEW_INSTANCING_DESC, 32);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_AS, D3D12_SHADER_BYTECODE, 24);
-        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_MS, D3D12_SHADER_BYTECODE, 24);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_ROOT_SIGNATURE, ID3D12RootSignature, 16, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_VS, D3D12_SHADER_BYTECODE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_PS, D3D12_SHADER_BYTECODE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DS, D3D12_SHADER_BYTECODE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_HS, D3D12_SHADER_BYTECODE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_GS, D3D12_SHADER_BYTECODE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_CS, D3D12_SHADER_BYTECODE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_STREAM_OUTPUT, D3D12_STREAM_OUTPUT_DESC, 40, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_BLEND, D3D12_BLEND_DESC, 336, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SAMPLE_MASK, u32, 8, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RASTERIZER, D3D12_RASTERIZER_DESC, 48, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL, D3D12_DEPTH_STENCIL_DESC, 56, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_INPUT_LAYOUT, D3D12_INPUT_LAYOUT_DESC, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_IB_STRIP_CUT_VALUE, D3D12_INDEX_BUFFER_STRIP_CUT_VALUE, 8, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_PRIMITIVE_TOPOLOGY, D3D12_PRIMITIVE_TOPOLOGY_TYPE, 8, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RENDER_TARGET_FORMATS, D3D12_RT_FORMAT_ARRAY, 40, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL_FORMAT, DXGI_FORMAT, 8, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SAMPLE_DESC, DXGI_SAMPLE_DESC, 16, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_NODE_MASK, D3D12_NODE_MASK, 8, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_NODE_MASK, u32, 8, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_CACHED_PSO, D3D12_CACHED_PIPELINE_STATE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_FLAGS, D3D12_PIPELINE_STATE_FLAGS, 8, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL1, D3D12_DEPTH_STENCIL_DESC1, 64, 4);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_VIEW_INSTANCING, D3D12_VIEW_INSTANCING_DESC, 32, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_AS, D3D12_SHADER_BYTECODE, 24, 8);
+        add_pair!(vec, D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_MS, D3D12_SHADER_BYTECODE, 24, 8);
 
-        if let None = vec.into_iter().find(|(a, b, c)| *a == ty && *b == val && *c == size) {
+        if let None = vec.into_iter().find(|(a, b, c, d)| *a == ty && *b == val && *c == size && *d == off) {
             panic!("The pair is not valid.")
         }
     }
@@ -60,7 +60,7 @@ pub mod stream {
             }
             #[test]
             fn $test() {
-                check_pair($val, std::any::TypeId::of::<$typ>(), std::mem::size_of::<$name>());
+                check_pair($val, std::any::TypeId::of::<$typ>(), std::mem::size_of::<$name>(), std::mem::offset_of!($name, v));
                 assert_eq!(std::mem::align_of::<$name>(), 8);
             }
         };
